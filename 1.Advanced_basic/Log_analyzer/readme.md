@@ -61,4 +61,4 @@ Whenever there is a critical errors, the scripts shuts down and records the erro
 __Common reasons for the  script to stop:__  
 - No reports to process. Either because the newest report has been processed, or because the 'log' folder is empty.  
 - Either 'log' or 'reports' folder doesn't exist.  
-- Number of errors above the threshold value 
+- Number of errors above the threshold value.
