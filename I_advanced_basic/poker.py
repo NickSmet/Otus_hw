@@ -27,18 +27,16 @@
 # любого ранга.
 
 # Одна функция уже реализована, сигнатуры и описания других даны.
-# Вам наверняка пригодится itertoolsю
+# Вам наверняка пригодится itertools
 # Можно свободно определять свои функции и т.п.
 # -----------------
 
-from itertools import combinations
+from itertools import combinations, product
 
-ranks=['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A']
-black_suits=['C','S']
-red_suits=['H','D']
-jokers=['?B','?R']
-black_joker=[rank + suit for rank in ranks for suit in black_suits]
-red_joker=[rank+suit for rank in ranks for suit in red_suits]
+RANKS = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A']
+BLACK_SUITS = ['C', 'S']
+RED_SUITS = ['H', 'D']
+JOKERS = ['?B', '?R']
 
 
 def hand_rank(hand):
@@ -64,77 +62,84 @@ def hand_rank(hand):
     else:
         return (0, ranks)
 
+
 def card_ranks(hand):
     """Возвращает список рангов (его числовой эквивалент),
     отсортированный от большего к меньшему"""
     rank_dict = {'T': 10, 'J': 11, 'Q': 12, 'K': 13, 'A': 14}
-    card_ranks=[x[0] for x in hand]
-    ranks=[]
+    card_ranks = [x[0] for x in hand]
+    ranks = []
     for i in card_ranks:
         try:
             ranks.append(int(i))
         except:
             ranks.append(rank_dict[i])
-    return sorted(ranks,reverse=True)
+    return sorted(ranks, reverse = True)
+
 
 def flush(hand):
     """Возвращает True, если все карты одной масти"""
-    return len(set(card[1] for card in hand))==1
+    return len(set(card[1] for card in hand)) == 1
+
 
 def straight(ranks):
     """Возвращает True, если отсортированные ранги формируют последовательность 5ти,
     где у 5ти карт ранги идут по порядку (стрит)"""
-    return ranks == list(range(max(ranks),min(ranks)-1,-1))
+    return ranks == list(range(max(ranks), min(ranks)-1, -1))
+
 
 def kind(n, ranks):
     """Возвращает первый ранг, который n раз встречается в данной руке.
     Возвращает None, если ничего не найдено"""
     for i in ranks:
-        if ranks.count(i)==n:
+        if ranks.count(i) == n:
             return i
     return None
+
 
 def two_pair(ranks):
     """Если есть две пары, то возврщает два соответствующих ранга,
     иначе возвращает None"""
-    uniques=set(ranks)
-    if 2<=len(uniques)<=3:
+    uniques = set(ranks)
+    if 2 <= len(uniques) <= 3:
         """Т.к. у нас 5 карт, то наличие 2-х пар означает 2 или 3 уникальных ранга"""
-        pair_ranks=[i for i in uniques if ranks.count(i)>=2]
+        pair_ranks = [i for i in uniques if ranks.count(i) >=2 ]
         return pair_ranks
     else:
         return None
 
+
 def best_hand(hand):
     """Из "руки" в 7 карт возвращает лучшую "руку" в 5 карт """
-    return max(combinations(hand,5), key=hand_rank)
+    return max(combinations(hand, 5), key = hand_rank)
+
 
 def best_wild_hand(hand):
     """best_hand но с джокерами"""
-    alternatives=get_alternatives(hand)
-    best_hands=[best_hand(hand) for hand in alternatives]
-    return max(best_hands, key=hand_rank)
 
-def get_alternatives(hand):
-    """Принимает руку из 7 карт и возвоащает список рук, которому рука эквивалентна.
-    Если в руке нет джокеров, возвращает список с одной, исходной рукой"""
+    black_joker = [rank + suit for rank in RANKS for suit in BLACK_SUITS]
+    red_joker = [rank + suit for rank in RANKS for suit in RED_SUITS]
 
-    jokerless=[card for card in hand if card not in jokers]
+    jokerless = [[card] for card in hand if card not in JOKERS]
+    jokerless_check = [card for card in hand if card not in JOKERS]
 
-    """Т.к. джокер не может принимать значение уже имеющихся в руке карт (возможно, стоит эксплицировать это в задании),
+    """Т.к. джокер не может принимать значение уже имеющихся в руке карт,
     убираем их из возможных значений джокеров"""
-    bjk_possible = [card for card in black_joker if card not in jokerless]
-    rjk_possible = [card for card in red_joker if card not in jokerless]
+    bjk_possible = [card for card in black_joker if card not in jokerless_check]
+    rjk_possible = [card for card in red_joker if card not in jokerless_check]
 
-    if all(joker in hand for joker in jokers):
-        alternatives=[jokerless+[bjk]+[rjk] for bjk in bjk_possible for rjk in rjk_possible]
+    if all(joker in hand for joker in JOKERS):
+        possibilties = jokerless + [bjk_possible] + [rjk_possible]
     elif '?B' in hand:
-        alternatives=[jokerless+[bjk] for bjk in bjk_possible]
+        possibilties = jokerless + [bjk_possible]
     elif '?R' in hand:
-        alternatives=[jokerless+[rjk] for rjk in rjk_possible]
+        possibilties = jokerless + [rjk_possible]
     else:
-        alternatives=[hand]
-    return alternatives
+        possibilties = jokerless
+
+    best_wild_hand = max(map(best_hand, product(*possibilties)), key = hand_rank)
+    return best_wild_hand
+
 
 def test_best_hand():
     print ("test_best_hand...")
@@ -146,6 +151,7 @@ def test_best_hand():
             == ['7C', '7D', '7H', '7S', 'JD'])
     print ('OK')
 
+
 def test_best_wild_hand():
     print ("test_best_wild_hand...")
     assert (sorted(best_wild_hand("6C 7C 8C 9C TC 5C ?B".split()))
@@ -155,6 +161,7 @@ def test_best_wild_hand():
     assert (sorted(best_wild_hand("JD TC TH 7C 7D 7S 7H".split()))
             == ['7C', '7D', '7H', '7S', 'JD'])
     print ('OK')
+
 
 if __name__ == '__main__':
     test_best_hand()
