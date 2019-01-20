@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 
 
 # log_format ui_short '$remote_addr  $remote_user $http_x_real_ip [$time_local] "$request" '
@@ -218,7 +217,6 @@ def main(config):
 
 
 if __name__ == "__main__":
-    load_config(config)
     merged_config = load_config(config)
     if 'LOG_FILE' in config.keys():
         setup_logger(config['LOG_FILE'])
