@@ -44,7 +44,7 @@ def load_config(config, args=None):
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--config', help='Load an external log file')
-    cfg_location = parser.parse_args().config
+    cfg_location = parser.parse_args(args).config
 
     if not cfg_location:
         return config

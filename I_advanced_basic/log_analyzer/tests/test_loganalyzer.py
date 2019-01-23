@@ -82,10 +82,11 @@ class Test_functionality(unittest.TestCase):
 
         merged_cfg = {**cfg_default, **cfg_file}
 
-        with patch("builtins.open", mock_open(read_data=str(cfg_file))) as mock_file:
-            assert open("test-config").read() == str(cfg_file)
-            self.assertEqual(loganalyzer.load_config(cfg_default, ["--config", "test-config"]), merged_cfg)
-            mock_file.assert_called_with("test-config", 'r')
+
+        with patch("builtins.open", mock_open()) as mock_file:
+            with patch("json.load",side_effect=[cfg_file]):
+                self.assertEqual(loganalyzer.load_config(cfg_default, ["--config", "test-config"]), merged_cfg)
+                mock_file.assert_called_with("test-config", 'r')
 
         with patch("loganalyzer.logging.info") as mock_logger:
             loganalyzer.load_config(cfg_default, ["--config", "nonexistent_cfg"])

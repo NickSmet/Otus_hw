@@ -1,5 +1,5 @@
 # Otus PyDev Course Homework
-# 01. Log analyzer
+# I. Log analyzer
 
 ## Task description:
 
