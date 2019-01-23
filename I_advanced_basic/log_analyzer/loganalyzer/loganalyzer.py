@@ -15,14 +15,17 @@ import json
 import string
 import logging
 import statistics
+from collections import namedtuple
+from decimal import Decimal
+from datetime import datetime
+import tempfile
 
-config = {
+CONFIG = {
     "REPORT_SIZE": 100,
     "REPORT_DIR": "./files/reports",
     "LOG_DIR": "./files/log",
     "REPORT_TEMPLATE": "./files/templates/report.html",
     "LOG_FILE": "./files/logfile",
-    "REPORT_HISTORY": "./files/report_history",
     "ERROR_THRESHOLD": 0.01
 }
 
@@ -41,57 +44,71 @@ def load_config(config, args=None):
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--config', help='Load an external log file')
-    cfg_location = parser.parse_args(args).config
+    cfg_location = parser.parse_args().config
 
     if not cfg_location:
         return config
 
-    else:
+    try:
+        with open(cfg_location, 'r') as cfg_file:
+            external_config = json.load(cfg_file)
+            merged_config = {**config, **external_config}
+            return merged_config
+    except Exception as e:
+        error(e)
+
+
+def choose_log(log_dir):
+    log_info = namedtuple('log_info', 'dir date ext')
+    log_name_pattern = re.compile('nginx-access-ui\.log-(?P<date>\d{8})(?P<ext>\.txt|\.gz|\.log)?$')
+
+    if not os.path.isdir(log_dir):
+        error("Error loading log. %s folder not found." % log_dir)
+
+    newest_date = datetime(1970, 1, 1)
+    for log in os.listdir(log_dir):
+        log_re = log_name_pattern.match(log)
+
+        if log_re is None:
+            continue
+
+        log_date_str = log_re.group('date')
         try:
-            with open(cfg_location, 'r') as f:
-                external_config = eval(f.readline())
-                merged_config = {**config, **external_config}
-                return merged_config
+            log_ext_str = log_re.group('ext')
         except:
-            logging.info("Could not load external config file")
-            return config
+            log_ext_str = None
+
+        log_date_dtime = datetime.strptime(log_date_str, '%Y%m%d')
+
+        if log_date_dtime > newest_date:
+            newest_date = log_date_dtime
+            newest_log = log_info(log_dir, log_date_dtime, log_ext_str)
+
+    try:
+        return newest_log
+    except:
+        error("No logs found")
 
 
-def choose_log(config):
-    log_folder = config["LOG_DIR"]
-    report_history = config["REPORT_HISTORY"]
-    if not os.path.isdir(log_folder):
-        error("Error loading log. %s folder not found." % log_folder)
+def open_log(log_info):
+    log_dir = getattr(log_info, "dir")
+    log_date = getattr(log_info, "date")
+    log_ext = getattr(log_info, "ext")
 
-    with open(report_history, 'r') as f:
-        try:
-            report_history = eval(f.readline())
-        except:
-            logging.error("Report_history не найден или поврежден")
-            raise RuntimeError("Report_history не найден или поврежден")
+    log_date_str = log_date.strftime("%Y%m%d")
 
-    logs = []
-    for log in os.listdir(config["LOG_DIR"]):
-        if re.match('nginx\-access\-ui\.log-\d{8}(\.txt|\.gz|\.log)?$', log):
-            logs.append(log)
-    if len(logs) == 0:
-        message = "No logs found"
-        logging.error(message)
-        raise RuntimeError(message)
-    newest_log_name = sorted(logs, reverse=True)[0]
-    if newest_log_name in report_history['complete']:
-        message = str('The newest log, ' + newest_log_name + ', has been processed. Nothing to process.')
-        logging.error(message)
-        raise RuntimeError(message)
-    return newest_log_name
-
-
-def open_log(log_path):
-    re_gzip = re.compile("\.gz$")
-    if re_gzip.search(log_path):
-        log_file = gzip.open(log_path, 'r')
+    if log_ext is None:
+        log_name = 'nginx-access-ui.log-' + log_date_str
     else:
+        log_name = 'nginx-access-ui.log-' + log_date_str + log_ext
+
+    log_path = os.path.join(log_dir, log_name)
+
+    if log_ext in [".log", ".txt", None]:
         log_file = open(log_path, 'r')
+    else:
+        log_file = gzip.open(log_path, 'r')
+
     for line in log_file:
         yield line
     log_file.close()
@@ -104,22 +121,22 @@ def parse_line(line):
         link = re.search(link_re, line).group(2)
         request_time = re.search(req_time_re, line).group(1)
     except:
-        logging.info("Не удалось распарсить строчку: " + line)
+        info("Не удалось распарсить строчку: " + line)
         pass
 
     return [link, float(request_time)]
 
 
-def parse_log(iterator):
-    report_data = {
+def parse_log(iterable):
+    report_raw_data = {
         "total_count": 0, "total_req_time": 0, "total_errors": 0
     }
 
     line_valid_pattern = re.compile(
-        '([\.\d]*) ([\-\d\w]*) +([\-\d\w\.]*) (\[.*\]) (\"(GET|POST).*\") (\d*) (\d*) (\".*\") (\".*\") (\".*\") (\".*\") (\".*\") (\d*\.\d*)'
+        '([\.\d]*) ([\-\d\w]*) +([\-\d\w\.]*) (\[.*\]) \"(GET|POST) (?P<href>.*)\" (\d*) (\d*) (\".*\") (\".*\") (\".*\") (\".*\") (\".*\") (?P<request_time>\d*\.\d*)'
     )
 
-    for line in iterator:
+    for line in iterable:
 
         try:
             line = line.decode("UTF-8").strip()
@@ -127,31 +144,36 @@ def parse_log(iterator):
             line = line.strip()
 
         if not line_valid_pattern.match(line):
-            report_data["total_errors"] += 1
+            report_raw_data["total_errors"] += 1
             continue
 
         entry = parse_line(line)
         url = entry[0]
         req_time = entry[1]
 
-        report_data["total_count"] += 1
-        report_data["total_req_time"] += req_time
+        report_raw_data["total_count"] += 1
+        report_raw_data["total_req_time"] += req_time
 
-        if entry[0] in report_data.keys():
-            report_data[url].append(req_time)
+        if entry[0] in report_raw_data.keys():
+            report_raw_data[url].append(req_time)
         else:
-            report_data[url] = [req_time]
+            report_raw_data[url] = [req_time]
 
-    return report_data
+    return report_raw_data
 
 
-def construct_report(config, log_data, report_size):
-    error_threshold = config["ERROR_THRESHOLD"]
-    if log_data["total_errors"] / log_data["total_count"] > error_threshold:
+def set_report_name(log_date):
+    log_date_str = log_date.strftime("%Y.%m.%d")
+    log_name = "report-" + log_date_str + ".html"
+    return log_name
+
+
+def construct_report(error_threshold, log_data, report_size):
+    if Decimal(log_data["total_errors"]) / Decimal(log_data["total_count"]) > error_threshold:
         error("Error threshold is reached. Data is likely corrupt or in an unsupported format!")
 
     fin_report = []
-    for entry in (log_data.keys()):
+    for entry in log_data:
         if entry in ('total_count', 'total_req_time', 'total_errors'):
             continue
         entry_data = log_data[entry]
@@ -168,24 +190,7 @@ def construct_report(config, log_data, report_size):
     return fin_report_sorted
 
 
-def mark_complete(log_name, config):
-    report_history = config["REPORT_HISTORY"]
-    with open(report_history, 'r') as f:
-        report_history_data = eval(f.readline())
-    if log_name not in report_history_data['complete']:
-        report_history_data['complete'].append(log_name)
-    with open(report_history, 'w') as f:
-        f.write(str(report_history_data))
-
-
-def set_report_name(log_name):
-    re_log_date = re.compile('nginx\-access\-ui\.log-(\d{4})(\d{2})(\d{2})')
-    log_date = re_log_date.search(log_name)
-    log_name = "report-" + ".".join(log_date.group(1, 2, 3)) + ".html"
-    return log_name
-
-
-def generate_report_html(report_template, output_destination, report_data):
+def generate_report_html(report_template, report_output_path, report_data):
     if not os.path.isfile(report_template):
         error('The report-template is not found in ' + report_template)
 
@@ -193,8 +198,10 @@ def generate_report_html(report_template, output_destination, report_data):
         template = string.Template(f.read())
     report = template.safe_substitute(table_json=json.dumps(report_data))
 
-    with open(output_destination, 'w') as f:
-        f.write(report)
+    with tempfile.NamedTemporaryFile() as temp:
+        with open(temp.name, 'w') as tmp:
+            tmp.write(report)
+            os.link(temp.name, report_output_path)
 
 
 def error(message):
@@ -202,26 +209,46 @@ def error(message):
     raise RuntimeError(message)
 
 
+def info(message):
+    logging.info(message)
+
+
 def main(config):
     log_dir = config["LOG_DIR"]
-    log_name = choose_log(config)
-    if log_name:
-        log_path = log_dir + '/' + log_name
-        output_destination = config["REPORT_DIR"] + '/' + set_report_name(log_name)
-        report_template = config["REPORT_TEMPLATE"]
-        report_size = config["REPORT_SIZE"]
-        report_data = parse_log(log_path)
-        report_summarized = construct_report(config, report_data, report_size)
-        generate_report_html(report_template, output_destination, report_summarized)
-        mark_complete(log_name, config)
+    log_info = choose_log(log_dir)
+    log_date = getattr(log_info, "date")
+
+    open_log_iterable = open_log(log_info)
+
+    report_dir = config["REPORT_DIR"]
+    if not os.path.isdir(report_dir):
+        os.makedirs(report_dir)
+
+    report_output_path = os.path.join(report_dir, set_report_name(log_date))
+    if os.path.isfile(report_output_path):
+        info("Report for the latest log already exists")
+        return
+
+    report_template = config["REPORT_TEMPLATE"]
+    report_size = config["REPORT_SIZE"]
+
+    report_raw_data = parse_log(open_log_iterable)
+    error_threshold = Decimal(config["ERROR_THRESHOLD"])
+
+    report_data = construct_report(error_threshold, report_raw_data, report_size)
+
+    generate_report_html(report_template, report_output_path, report_data)
 
 
 if __name__ == "__main__":
-    merged_config = load_config(config)
-    if 'LOG_FILE' in config.keys():
-        setup_logger(config['LOG_FILE'])
+    merged_config = load_config(CONFIG)
+
+    if 'LOG_FILE' in merged_config:
+
+        setup_logger(merged_config['LOG_FILE'])
     else:
         setup_logger()
+
 
     try:
         main(merged_config)
