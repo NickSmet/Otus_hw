@@ -103,7 +103,7 @@ def two_pair(ranks):
     if 2 <= len(uniques) <= 3:
         """Т.к. у нас 5 карт, то наличие 2-х пар означает 2 или 3 уникальных ранга"""
         pair_ranks = [i for i in uniques if ranks.count(i) >=2 ]
-        return pair_ranks
+        return sorted(pair_ranks, reverse=True)
     else:
         return None
 
