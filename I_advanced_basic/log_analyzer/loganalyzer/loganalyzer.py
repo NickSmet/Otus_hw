@@ -22,13 +22,14 @@ import tempfile
 
 CONFIG = {
     "REPORT_SIZE": 100,
-    "REPORT_DIR": "./files/reports",
-    "LOG_DIR": "./files/log",
-    "REPORT_TEMPLATE": "./files/templates/report.html",
-    "LOG_FILE": "./files/logfile",
+    "REPORT_DIR": ".\\files\\reports",
+    "LOG_DIR": ".\\files\\log",
+    "REPORT_TEMPLATE": ".\\files\\templates\\report.html",
+    "LOG_FILE": ".\\files\\logfile",
     "ERROR_THRESHOLD": 0.01
 }
 
+os.chdir(os.path.dirname(__file__))
 
 def setup_logger(logfile=None):
     logging.basicConfig(  # type: ignore
@@ -64,14 +65,12 @@ def choose_log(log_dir):
 
     if not os.path.isdir(log_dir):
         error("Error loading log. %s folder not found." % log_dir)
-
     newest_date = datetime(1970, 1, 1)
     for log in os.listdir(log_dir):
         log_re = log_name_pattern.match(log)
 
         if log_re is None:
             continue
-
         log_date_str = log_re.group('date')
         try:
             log_ext_str = log_re.group('ext')
@@ -196,12 +195,11 @@ def generate_report_html(report_template, report_output_path, report_data):
 
     with open(report_template, 'r') as f:
         template = string.Template(f.read())
-    report = template.safe_substitute(table_json=json.dumps(report_data))
+        report = template.safe_substitute(table_json=json.dumps(report_data))
 
-    with tempfile.NamedTemporaryFile() as temp:
-        with open(temp.name, 'w') as tmp:
-            tmp.write(report)
-            os.link(temp.name, report_output_path)
+    with tempfile.NamedTemporaryFile(mode='w') as temp:
+        temp.write(report)
+        os.link(temp.name, report_output_path)
 
 
 def error(message):

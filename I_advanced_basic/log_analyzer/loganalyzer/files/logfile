@@ -1,1 +1,263 @@
-[2019.01.08 08:08:27] I Самый свежий лог, 'nginx-access-ui.log-20170724.gz', уже обработан.
+[2020.09.10 16:48:59] E No logs found
+[2020.09.10 16:48:59] E No logs found
+Traceback (most recent call last):
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 89, in choose_log
+    return newest_log
+UnboundLocalError: local variable 'newest_log' referenced before assignment
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 255, in <module>
+    main(merged_config)
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 219, in main
+    log_info = choose_log(log_dir)
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 91, in choose_log
+    error("No logs found")
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 210, in error
+    raise RuntimeError(message)
+RuntimeError: No logs found
+[2020.09.10 16:50:54] E [Errno 13] Permission denied: 'C:\\Users\\NickS\\AppData\\Local\\Temp\\tmpqob09i62'
+Traceback (most recent call last):
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 255, in <module>
+    main(merged_config)
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 241, in main
+    generate_report_html(report_template, report_output_path, report_data)
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 203, in generate_report_html
+    with open(temp.name, 'w') as tmp:
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\NickS\\AppData\\Local\\Temp\\tmpqob09i62'
+[2020.09.10 16:51:56] E [Errno 13] Permission denied: 'C:\\Users\\NickS\\AppData\\Local\\Temp\\tmp3n_2_b8n'
+Traceback (most recent call last):
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 255, in <module>
+    main(merged_config)
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 241, in main
+    generate_report_html(report_template, report_output_path, report_data)
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 203, in generate_report_html
+    with open(temp.name, 'w') as tmp:
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\NickS\\AppData\\Local\\Temp\\tmp3n_2_b8n'
+[2020.09.10 16:53:23] E [Errno 13] Permission denied: 'C:\\Users\\NickS\\AppData\\Local\\Temp\\tmphpwiomdr'
+Traceback (most recent call last):
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 255, in <module>
+    main(merged_config)
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 241, in main
+    generate_report_html(report_template, report_output_path, report_data)
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 203, in generate_report_html
+    with open(temp.name, 'w') as tmp:
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\NickS\\AppData\\Local\\Temp\\tmphpwiomdr'
+[2020.09.10 16:53:44] E [Errno 13] Permission denied: 'C:\\Users\\NickS\\AppData\\Local\\Temp\\tmpube3qvuh'
+Traceback (most recent call last):
+  File "C:\Users\NickS\VS Code Projects\OtusHW\Otus_hw\I_advanced_basic\log_analyzer\loganalyzer\loganalyzer.py", line 255, in <module>
+    main(merged_config)
+  File "C:\Users\NickS\VS Code Projects\OtusHW\Otus_hw\I_advanced_basic\log_analyzer\loganalyzer\loganalyzer.py", line 241, in main
+    generate_report_html(report_template, report_output_path, report_data)
+  File "C:\Users\NickS\VS Code Projects\OtusHW\Otus_hw\I_advanced_basic\log_analyzer\loganalyzer\loganalyzer.py", line 203, in generate_report_html
+    with open(temp.name, 'w') as tmp:
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\NickS\\AppData\\Local\\Temp\\tmpube3qvuh'
+[2020.09.10 16:55:16] E [Errno 13] Permission denied: 'C:\\Users\\NickS\\AppData\\Local\\Temp\\tmpuya0uy6_'
+Traceback (most recent call last):
+  File "C:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 255, in <module>
+    main(merged_config)
+  File "C:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 241, in main
+    generate_report_html(report_template, report_output_path, report_data)
+  File "C:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 203, in generate_report_html
+    with open(temp.name, 'w') as tmp:
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\NickS\\AppData\\Local\\Temp\\tmpuya0uy6_'
+[2020.09.10 16:57:19] E [Errno 13] Permission denied: 'C:\\Users\\NickS\\AppData\\Local\\Temp\\tmpyz4uw4go'
+Traceback (most recent call last):
+  File "C:\Users\NickS\VS Code Projects\OtusHW\Otus_hw\I_advanced_basic\log_analyzer\loganalyzer\loganalyzer.py", line 255, in <module>
+    main(merged_config)
+  File "C:\Users\NickS\VS Code Projects\OtusHW\Otus_hw\I_advanced_basic\log_analyzer\loganalyzer\loganalyzer.py", line 241, in main
+    generate_report_html(report_template, report_output_path, report_data)
+  File "C:\Users\NickS\VS Code Projects\OtusHW\Otus_hw\I_advanced_basic\log_analyzer\loganalyzer\loganalyzer.py", line 203, in generate_report_html
+    with open(temp.name, 'w') as tmp:
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\NickS\\AppData\\Local\\Temp\\tmpyz4uw4go'
+[2020.09.10 16:58:43] E [Errno 13] Permission denied: 'C:\\Users\\NickS\\AppData\\Local\\Temp\\tmp8416ufc0'
+Traceback (most recent call last):
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 255, in <module>
+    main(merged_config)
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 241, in main
+    generate_report_html(report_template, report_output_path, report_data)
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 203, in generate_report_html
+    with open(temp.name, 'w') as tmp:
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\NickS\\AppData\\Local\\Temp\\tmp8416ufc0'
+[2020.09.10 17:01:21] E name 'tmp' is not defined
+Traceback (most recent call last):
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 255, in <module>
+    main(merged_config)
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 241, in main
+    generate_report_html(report_template, report_output_path, report_data)
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 204, in generate_report_html
+    tmp.write(report)
+NameError: name 'tmp' is not defined
+[2020.09.10 17:01:41] E a bytes-like object is required, not 'str'
+Traceback (most recent call last):
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 255, in <module>
+    main(merged_config)
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 241, in main
+    generate_report_html(report_template, report_output_path, report_data)
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 204, in generate_report_html
+    temp.write(report)
+  File "C:\WPy64-3741\python-3.7.4.amd64\lib\tempfile.py", line 481, in func_wrapper
+    return func(*args, **kwargs)
+TypeError: a bytes-like object is required, not 'str'
+[2020.09.10 17:07:58] E [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\NickS\\AppData\\Local\\Temp\\tmpyzdofo11'
+Traceback (most recent call last):
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 204, in generate_report_html
+    fileTemp.write(report)
+  File "C:\WPy64-3741\python-3.7.4.amd64\lib\tempfile.py", line 481, in func_wrapper
+    return func(*args, **kwargs)
+TypeError: a bytes-like object is required, not 'str'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 261, in <module>
+    main(merged_config)
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 247, in main
+    generate_report_html(report_template, report_output_path, report_data)
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 209, in generate_report_html
+    os.remove(fileTemp.name)
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\NickS\\AppData\\Local\\Temp\\tmpyzdofo11'
+[2020.09.10 17:15:09] E a bytes-like object is required, not 'str'
+Traceback (most recent call last):
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 261, in <module>
+    main(merged_config)
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 247, in main
+    generate_report_html(report_template, report_output_path, report_data)
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 207, in generate_report_html
+    temp.write(report)
+  File "C:\WPy64-3741\python-3.7.4.amd64\lib\tempfile.py", line 481, in func_wrapper
+    return func(*args, **kwargs)
+TypeError: a bytes-like object is required, not 'str'
+[2020.09.10 17:16:19] E a bytes-like object is required, not 'str'
+Traceback (most recent call last):
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 261, in <module>
+    main(merged_config)
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 247, in main
+    generate_report_html(report_template, report_output_path, report_data)
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 207, in generate_report_html
+    temp.write(report)
+  File "C:\WPy64-3741\python-3.7.4.amd64\lib\tempfile.py", line 481, in func_wrapper
+    return func(*args, **kwargs)
+TypeError: a bytes-like object is required, not 'str'
+[2020.09.10 17:18:28] E a bytes-like object is required, not 'str'
+Traceback (most recent call last):
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 261, in <module>
+    main(merged_config)
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 247, in main
+    generate_report_html(report_template, report_output_path, report_data)
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 207, in generate_report_html
+    temp.write(report)
+  File "C:\WPy64-3741\python-3.7.4.amd64\lib\tempfile.py", line 481, in func_wrapper
+    return func(*args, **kwargs)
+TypeError: a bytes-like object is required, not 'str'
+[2020.09.10 17:19:17] E a bytes-like object is required, not 'str'
+Traceback (most recent call last):
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 261, in <module>
+    main(merged_config)
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 247, in main
+    generate_report_html(report_template, report_output_path, report_data)
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 207, in generate_report_html
+    temp.write(report)
+  File "C:\WPy64-3741\python-3.7.4.amd64\lib\tempfile.py", line 481, in func_wrapper
+    return func(*args, **kwargs)
+TypeError: a bytes-like object is required, not 'str'
+[2020.09.10 17:19:48] E 
+Traceback (most recent call last):
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 261, in <module>
+    main(merged_config)
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 247, in main
+    generate_report_html(report_template, report_output_path, report_data)
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 210, in generate_report_html
+    assert temp.read() == report
+AssertionError
+[2020.09.10 17:20:12] E cannot use a string pattern on a bytes-like object
+Traceback (most recent call last):
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 261, in <module>
+    main(merged_config)
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 247, in main
+    generate_report_html(report_template, report_output_path, report_data)
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 204, in generate_report_html
+    report = template.safe_substitute(table_json=json.dumps(report_data)).encode()
+  File "C:\WPy64-3741\python-3.7.4.amd64\lib\string.py", line 161, in safe_substitute
+    return self.pattern.sub(convert, self.template)
+TypeError: cannot use a string pattern on a bytes-like object
+[2020.09.10 17:20:34] E 
+Traceback (most recent call last):
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 261, in <module>
+    main(merged_config)
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 247, in main
+    generate_report_html(report_template, report_output_path, report_data)
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 210, in generate_report_html
+    assert temp.read() == report
+AssertionError
+[2020.09.10 17:20:54] E 
+Traceback (most recent call last):
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 261, in <module>
+    main(merged_config)
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 247, in main
+    generate_report_html(report_template, report_output_path, report_data)
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 210, in generate_report_html
+    assert tmp.read() == report
+AssertionError
+[2020.09.10 17:21:27] E 
+Traceback (most recent call last):
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 261, in <module>
+    main(merged_config)
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 247, in main
+    generate_report_html(report_template, report_output_path, report_data)
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 210, in generate_report_html
+    assert tmp.read() == report
+AssertionError
+[2020.09.11 00:44:16] E 
+Traceback (most recent call last):
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 261, in <module>
+    main(merged_config)
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 247, in main
+    generate_report_html(report_template, report_output_path, report_data)
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 210, in generate_report_html
+    assert tmp.read() == report
+AssertionError
+[2020.09.11 00:45:57] E name 'temp' is not defined
+Traceback (most recent call last):
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 254, in <module>
+    main(merged_config)
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 240, in main
+    generate_report_html(report_template, report_output_path, report_data)
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 202, in generate_report_html
+    with open(temp.name, 'r') as tmp:
+NameError: name 'temp' is not defined
+[2020.09.11 06:04:47] E [Errno 13] Permission denied: 'C:\\Users\\NickS\\AppData\\Local\\Temp\\tmp0u2e2u1k'
+Traceback (most recent call last):
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 256, in <module>
+    main(merged_config)
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 242, in main
+    generate_report_html(report_template, report_output_path, report_data)
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 204, in generate_report_html
+    with open(temp.name, 'w') as tmp:
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\NickS\\AppData\\Local\\Temp\\tmp0u2e2u1k'
+[2020.09.11 06:06:49] E name 'tmp' is not defined
+Traceback (most recent call last):
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 255, in <module>
+    main(merged_config)
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 241, in main
+    generate_report_html(report_template, report_output_path, report_data)
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 204, in generate_report_html
+    tmp.write(report)
+NameError: name 'tmp' is not defined
+[2020.09.11 06:07:26] I Report for the latest log already exists
+[2020.09.11 06:12:36] I Report for the latest log already exists
+[2020.09.11 06:13:48] E day is out of range for month
+Traceback (most recent call last):
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 254, in <module>
+    main(merged_config)
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 218, in main
+    log_info = choose_log(log_dir)
+  File "c:/Users/NickS/VS Code Projects/OtusHW/Otus_hw/I_advanced_basic/log_analyzer/loganalyzer/loganalyzer.py", line 82, in choose_log
+    log_date_dtime = datetime.strptime(log_date_str, '%Y%m%d')
+  File "C:\WPy64-3741\python-3.7.4.amd64\lib\_strptime.py", line 577, in _strptime_datetime
+    tt, fraction, gmtoff_fraction = _strptime(data_string, format)
+  File "C:\WPy64-3741\python-3.7.4.amd64\lib\_strptime.py", line 544, in _strptime
+    datetime_date(year, 1, 1).toordinal() + 1
+ValueError: day is out of range for month
+[2020.09.11 06:14:41] I Report for the latest log already exists
